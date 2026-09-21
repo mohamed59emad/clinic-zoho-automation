@@ -1,0 +1,256 @@
+{
+  "name": "clinc automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dd01ca78-c3e2-411c-8c77-b4129e940ad8",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -576,
+        -128
+      ],
+      "id": "d8da08e1-929f-4c85-9a9f-705700c3bfba",
+      "name": "Webhook",
+      "webhookId": "dd01ca78-c3e2-411c-8c77-b4129e940ad8"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1gp317bI2V5odcyxdHcf7MLs88Wyw-rSXheTplZgx5s8",
+          "mode": "list",
+          "cachedResultName": "clinc automation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gp317bI2V5odcyxdHcf7MLs88Wyw-rSXheTplZgx5s8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gp317bI2V5odcyxdHcf7MLs88Wyw-rSXheTplZgx5s8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "patient id": "={{ $json.body['patientt id'] }}",
+            "first name": "={{ $json.body['first Name'] }}",
+            "last name": "={{ $json.body['last name'] }}",
+            "email": "={{ $json.body.email }}",
+            "phone": "={{ $json.body.phone }}",
+            "from": "={{ $json.body.from }}",
+            "to": "={{ $json.body.to }}",
+            "appointment id": "={{ $json.body['meeting id'] }}",
+            "appointment creation time": "={{ $json.body['created Time'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "patient id",
+              "displayName": "patient id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first name",
+              "displayName": "first name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last name",
+              "displayName": "last name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "to",
+              "displayName": "to",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "appointment id",
+              "displayName": "appointment id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "appointment creation time",
+              "displayName": "appointment creation time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -272,
+        -160
+      ],
+      "id": "c426972d-65bf-400d-9c84-df499e4876e9",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CK7H39eoT46H7ror",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5044095093",
+        "text": "=meeting with {{ $json['first name'] }} {{ $json['last name'] }}\n\ndata from{{ $json.from }} to {{ $json.to }}\n\ndescrioation :\n{{ $json.descripation }}\n\npatient id :\n{{ $json['patient id'] }} \n\nappointment id:\n{{ $json['appointment id'] }}\n\npatient phone number :\n{{ $json.phone }}\n",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        -96
+      ],
+      "id": "77b0b8db-ed1f-4d3c-a185-9747d63757c9",
+      "name": "Send a text message",
+      "webhookId": "5489a043-7f58-40ab-9245-3b2f5fbdf6a8",
+      "credentials": {
+        "telegramApi": {
+          "id": "kZlOyd6rfXbcmHGK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "meeting created",
+        "message": "=start form {{ $json.from }} end {{ $json.to }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        -288
+      ],
+      "id": "87c96139-694d-4acc-a04e-dfd37d7c0676",
+      "name": "Send a message",
+      "webhookId": "f0861e9c-ea60-43ac-a8be-f795de66ebf4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "y9EnQIRJtD8Y7buZ",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "88c007ac-22eb-400e-9d77-21280b9d958d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a718bbee4d410d995417b657892283b504178d89941aa9b4fba456e23be7235c"
+  },
+  "nodeGroups": [],
+  "id": "hSZ5fkbiImGNIFKv",
+  "tags": []
+}
